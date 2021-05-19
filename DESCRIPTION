@@ -19,5 +19,4 @@ Suggests:
     RefManageR,
     bibtex,
     viridis,
-    xaringan,
-    pagedown
+    xaringan

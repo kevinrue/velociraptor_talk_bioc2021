@@ -80,12 +80,3 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
           FOLDER: _site
-      
-      - name: Install Chromium
-        run: |
-          sudo apt-get update && sudo apt-get -y install chromium-browser
-
-      - name: PDF
-        run: |
-          pagedown::chrome_print("index.Rmd", async = FALSE, extra_args = c('--disable-gpu', '--no-sandbox'))
-        shell: Rscript {0}
