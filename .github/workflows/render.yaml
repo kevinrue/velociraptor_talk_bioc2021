@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     container: bioconductor/bioconductor_docker:devel
 
-    name: render
-
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -82,3 +80,8 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
           FOLDER: _site
+
+      - name: PDF
+        run: |
+          pagedown::chrome_print("index.Rmd", async = FALSE)
+        shell: Rscript {0}
