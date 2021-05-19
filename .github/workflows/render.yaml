@@ -87,5 +87,5 @@ jobs:
 
       - name: PDF
         run: |
-          pagedown::chrome_print("index.Rmd", async = FALSE)
+          pagedown::chrome_print("index.Rmd", async = FALSE, extra_args = c('--disable-gpu', '--no-sandbox'))
         shell: Rscript {0}
