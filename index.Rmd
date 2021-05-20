@@ -1,7 +1,7 @@
 ---
-title: 'My Bioconductor Topic'
-subtitle: 'Bioconductor Meeting YEAR'
-author: '[Author One](https://author1.github.io), [Author Two](https://author2.github.io)'
+title: 'Bioconductor toolkit for single-cell velocity <img src="img/velociraptor_sticker.png" height="200px" style="vertical-align:bottom;float:right">'
+subtitle: 'Bioconductor Conference 2021'
+author: '[Kevin Rue-Albrecht](https://kevinrue.github.io), [Charlotte Soneson](https://csoneson.github.io), [Michael Stadler](https://github.com/mbstadler), [Aaron Lun](https://github.com/LTLA)'
 institute: ''
 date: 'YYYY-MM-DD (updated: `r Sys.Date()`)'
 output:
@@ -21,9 +21,9 @@ layout: true
 <div class="my-header"><img src="img/sticker.png" alt="logo" align="right" height="90%"></div>
 
 <div class="my-footer"><span>
-Footer left
+Kevin Rue-Albrecht
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-Footer middle
+velociraptor
 </span></div>
 
 ```{r setup, include=FALSE}
@@ -61,6 +61,15 @@ Content.
 
 # References
 
+.small-p[
 ```{r refs, include=TRUE, echo=FALSE, results="asis"}
 PrintBibliography(bib)
 ```
+]
+
+<br/>
+
+.center[
+<img src="img/bioconductor_sticker.png" height="300px">
+<img src="img/velociraptor_sticker.png" height="300px">
+]
