@@ -83,6 +83,14 @@ Balance between unspliced and spliced mRNAs is predictive of cellular state prog
 
 ---
 
+# The Bioconductor factor
+
+```{r, echo=FALSE}
+knitr::include_graphics("img/distracted-analyst.jpg")
+```
+
+---
+
 # References
 
 .small-p[
