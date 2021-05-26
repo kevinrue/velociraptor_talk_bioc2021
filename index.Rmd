@@ -18,7 +18,7 @@ output:
 
 layout: true
 
-<div class="my-header"><img src="img/sticker.png" alt="logo" align="right" height="90%"></div>
+<div class="my-header"><img src="img/velociraptor_sticker.png" alt="logo" align="right" height="90%"></div>
 
 <div class="my-footer"><span>
 Kevin Rue-Albrecht
