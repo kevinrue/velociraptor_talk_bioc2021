@@ -18,7 +18,7 @@ output:
 
 layout: true
 
-<div class="my-header"><img src="img/sticker.png" alt="logo" align="right" height="90%"></div>
+<div class="my-header"><img src="img/velociraptor_sticker.png" alt="logo" align="right" height="90%"></div>
 
 <div class="my-footer"><span>
 Kevin Rue-Albrecht
@@ -53,9 +53,15 @@ NoCite(bib, "orchestrating2015")
 
 ---
 
-# Title
+# RNA velocity
 
-Content.
+```{r, echo=FALSE}
+knitr::include_graphics("img/lammano2018_fig3.png")
+```
+
+.right[
+`r Citet(bib, "lammano2018")`
+]
 
 ---
 
@@ -66,8 +72,6 @@ Content.
 PrintBibliography(bib)
 ```
 ]
-
-<br/>
 
 .center[
 <img src="img/bioconductor_sticker.png" height="300px">
