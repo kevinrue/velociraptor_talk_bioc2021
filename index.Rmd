@@ -53,9 +53,13 @@ NoCite(bib, "orchestrating2015")
 
 ---
 
-# Title
+# RNA velocity
 
-Content.
+```{r, echo=FALSE}
+knitr::include_graphics("img/lammano2018_fig3.png")
+```
+
+`r Citet(bib, "lammano2018")`
 
 ---
 
@@ -66,8 +70,6 @@ Content.
 PrintBibliography(bib)
 ```
 ]
-
-<br/>
 
 .center[
 <img src="img/bioconductor_sticker.png" height="300px">
