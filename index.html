@@ -42,14 +42,64 @@ velociraptor
 
 ---
 
-# RNA velocity
+# RNA velocity predicts the future state of cells
 
 ![](img/lammano2018_fig3.png)&lt;!-- --&gt;
 
 .right[
-&lt;a name=cite-lammano2018&gt;&lt;/a&gt;[La Manno, Soldatov, Zeisel, Braun, Hochgerner, Petukhov, Lidschreiber, Kastriti, Lönnerberg, Furlan, Fan, Borm, Liu, van
-Bruggen, Guo, He, Barker, Sundström, Castelo-Branco, Cramer, Adameyko, Linnarsson, and Kharchenko (2018)](https://doi.org/10.1038/s41586-018-0414-6)
+.small-p[
+RNA velocity field describes fate decisions of major neural lineages in the hippocampus.
+&lt;a name=cite-lammano2018&gt;&lt;/a&gt;([La Manno, Soldatov, Zeisel, Braun, Hochgerner, Petukhov, Lidschreiber, Kastriti, Lönnerberg, Furlan, Fan, Borm, Liu, van
+Bruggen, Guo, He, Barker, Sundström, Castelo-Branco, Cramer, Adameyko, Linnarsson, and Kharchenko, 2018](https://doi.org/10.1038/s41586-018-0414-6))
 ]
+]
+
+---
+
+# RNA velocity from spliced and unspliced mRNAs
+
+![](img/lammano2018_fig1.png)&lt;!-- --&gt;
+
+.right[
+.small-p[
+Balance between unspliced and spliced mRNAs is predictive of cellular state progression.
+([La Manno Soldatov, et al., 2018](https://doi.org/10.1038/s41586-018-0414-6))
+]
+]
+
+---
+
+# The Bioconductor factor
+
+![](img/distracted-analyst.jpg)&lt;!-- --&gt;
+
+---
+
+# &lt;img src="img/velociraptor_sticker.png" height="70px" style="vertical-align:bottom"&gt; is a Bioconductor-friendly wrapper of &lt;i class="fab fa-python"&gt;&lt;/i&gt; scVelo
+
+&lt;img src="img/bioconductor_sticker.png" height="30px" style="vertical-align:bottom"&gt; *[velociraptor](https://bioconductor.org/packages/3.13/velociraptor)*
+uses
+&lt;img src="img/bioconductor_sticker.png" height="30px" style="vertical-align:bottom"&gt; *[basilisk](https://bioconductor.org/packages/3.13/basilisk)*
+to run &lt;i class="fab fa-python"&gt;&lt;/i&gt; [scVelo](https://pypi.org/project/scvelo/)
+in a `BasiliskEnvironment`
+(i.e., a &lt;img src="img/conda.png" height="30px" style="vertical-align:bottom"&gt; [Conda](https://docs.conda.io/en/latest/) environment).
+
+
+```r
+setMethod("scvelo", "SummarizedExperiment", function(x, ...,
+    assay.X="counts", assay.spliced="spliced", assay.unspliced="unspliced")
+{
+  ...
+  output &lt;- basiliskRun(env = velo.env, fun = .run_scvelo,
+      X = X, spliced = spliced, unspliced = unspliced,
+      use.theirs = use.theirs, mode = mode,
+      scvelo.params = scvelo.params,
+      dimred = dimred)
+  ...
+}
+```
+
+`velociraptor::scvelo()` returns a `SingleCellExperiment` object containing the output of the velocity calculations.
 
 ---
 
