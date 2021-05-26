@@ -59,7 +59,9 @@ NoCite(bib, "orchestrating2015")
 knitr::include_graphics("img/lammano2018_fig3.png")
 ```
 
+.right[
 `r Citet(bib, "lammano2018")`
+]
 
 ---
 
