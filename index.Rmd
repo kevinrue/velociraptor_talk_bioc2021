@@ -56,13 +56,13 @@ NoCite(bib, "orchestrating2015")
 # RNA velocity predicts the future state of cells
 
 ```{r, echo=FALSE}
-knitr::include_graphics("img/lammano2018_fig3.png")
+knitr::include_graphics("img/lamanno2018_fig3.png")
 ```
 
 .right[
 .small-p[
 RNA velocity field describes fate decisions of major neural lineages in the hippocampus.
-`r Citep(bib, "lammano2018")`
+`r Citep(bib, "lamanno2018")`
 ]
 ]
 
@@ -71,13 +71,13 @@ RNA velocity field describes fate decisions of major neural lineages in the hipp
 # RNA velocity from spliced and unspliced mRNAs
 
 ```{r, echo=FALSE}
-knitr::include_graphics("img/lammano2018_fig1.png")
+knitr::include_graphics("img/lamanno2018_fig1.png")
 ```
 
 .right[
 .small-p[
 Balance between unspliced and spliced mRNAs is predictive of cellular state progression.
-`r Citep(bib, "lammano2018")`
+`r Citep(bib, "lamanno2018")`
 ]
 ]
 
