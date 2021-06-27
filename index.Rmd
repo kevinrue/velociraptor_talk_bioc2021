@@ -46,7 +46,8 @@ BibOptions(
   max.names = 2,
   style = "markdown",
   hyperlink = "to.doc",
-  dashed = TRUE)
+  dashed = TRUE,
+  longnamesfirst = FALSE)
 bib <- ReadBib("references.bib")
 NoCite(bib, "orchestrating2015")
 ```
