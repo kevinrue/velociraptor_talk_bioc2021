@@ -43,7 +43,7 @@ BibOptions(
   check.entries = FALSE,
   bib.style = "authoryear",
   cite.style = "authoryear",
-  max.names = 2,
+  max.names = 1,
   style = "markdown",
   hyperlink = "to.doc",
   dashed = TRUE,
@@ -84,6 +84,16 @@ Balance between unspliced and spliced mRNAs is predictive of cellular state prog
 
 ---
 
+# scVelo
+
+* Python package.
+* Estimates RNA velocity from estimates of gene-wise spliced and unspliced abundances.
+* Steady-state, stochastic, dynamic models.
+* Uses the `AnnData` format for internal data representation.
+* Not straightforward to integrate in an R/Bioconductor-based workflow.
+
+---
+
 # The Bioconductor factor
 
 ```{r, echo=FALSE}
@@ -116,6 +126,47 @@ setMethod("scvelo", "SummarizedExperiment", function(x, ...,
 ```
 
 `velociraptor::scvelo()` returns a `SingleCellExperiment` object containing the output of the velocity calculations.
+
+---
+
+# Input and data representation
+
+* The input to `scVelo` is two gene x cell count matrices, tabulating the UMI count for spliced and unspliced variants of each gene.
+* Several tools exist to estimate these counts from the raw reads (see `r Citet(bib, "soneson2021")` for an overview).
+* Count matrices are stored as assays in a `SummarizedExperiment` object.
+* The `r BiocStyle::Biocpkg('zellkonverter')` package takes care of conversion between the `SummarizedExperiment` and `AnnData` formats. 
+
+
+```{r, message=FALSE, eval=FALSE}
+(hermann <- scRNAseq::HermannSpermatogenesisData())
+```
+
+---
+
+# Running `scvelo`
+
+* Use gene selection, normalization and dimension reduction from `scVelo`, or customize each step in R for full compatibility with the rest of the workflow.
+* `scvelo(se)`
+
+```{r, message=FALSE, eval=FALSE}
+(hermann_velo <- velociraptor::scvelo(hermann, assay.X = "spliced"))
+```
+
+---
+
+# Project velocities onto low-dimensional embedding
+
+```{r}
+
+```
+
+
+---
+
+# Gene-wise visualizations
+
+* Phase plots
+* Expression level and velocity for a given gene across cells
 
 ---
 
