@@ -62,6 +62,7 @@ suppressPackageStartupMessages({
   library(ggplot2)
   library(SingleCellExperiment)
   library(SummarizedExperiment)
+  library(patchwork)
 })
 ```
 
