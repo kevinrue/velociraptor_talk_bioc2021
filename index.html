@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Bioconductor toolkit for single-cell velocity </title>
+    <title>Bioconductor toolkit for single-cell RNA velocity </title>
     <meta charset="utf-8" />
     <meta name="author" content="Kevin Rue-Albrecht, Charlotte Soneson, Michael Stadler, Aaron Lun" />
     <script src="libs/header-attrs/header-attrs.js"></script>
@@ -16,10 +16,10 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Bioconductor toolkit for single-cell velocity <img src="img/velociraptor_sticker.png" height="200px" style="vertical-align:bottom;float:right">
+# Bioconductor toolkit for single-cell RNA velocity <img src="img/velociraptor_sticker.png" height="200px" style="vertical-align:bottom;float:right">
 ## Bioconductor Conference 2021
 ### <a href="https://kevinrue.github.io">Kevin Rue-Albrecht</a>, <a href="https://csoneson.github.io">Charlotte Soneson</a>, <a href="https://github.com/mbstadler">Michael Stadler</a>, <a href="https://github.com/LTLA">Aaron Lun</a>
-### YYYY-MM-DD (updated: 2021-05-26)
+### YYYY-MM-DD (updated: 2021-07-12)
 
 ---
 
@@ -40,17 +40,18 @@ velociraptor
 
 
 
+
+
 ---
 
 # RNA velocity predicts the future state of cells
 
-![](img/lammano2018_fig3.png)&lt;!-- --&gt;
+&lt;img src="img/lamanno2018_fig3.png" width="2849" /&gt;
 
 .right[
 .small-p[
 RNA velocity field describes fate decisions of major neural lineages in the hippocampus.
-&lt;a name=cite-lammano2018&gt;&lt;/a&gt;([La Manno, Soldatov, Zeisel, Braun, Hochgerner, Petukhov, Lidschreiber, Kastriti, Lönnerberg, Furlan, Fan, Borm, Liu, van
-Bruggen, Guo, He, Barker, Sundström, Castelo-Branco, Cramer, Adameyko, Linnarsson, and Kharchenko, 2018](https://doi.org/10.1038/s41586-018-0414-6))
+&lt;a name=cite-lamanno2018&gt;&lt;/a&gt;([La Manno, et al., 2018](https://doi.org/10.1038/s41586-018-0414-6))
 ]
 ]
 
@@ -58,14 +59,24 @@ Bruggen, Guo, He, Barker, Sundström, Castelo-Branco, Cramer, Adameyko, Linnarss
 
 # RNA velocity from spliced and unspliced mRNAs
 
-![](img/lammano2018_fig1.png)&lt;!-- --&gt;
+&lt;img src="img/lamanno2018_fig1.png" width="2140" /&gt;
 
 .right[
 .small-p[
 Balance between unspliced and spliced mRNAs is predictive of cellular state progression.
-([La Manno Soldatov, et al., 2018](https://doi.org/10.1038/s41586-018-0414-6))
+([La Manno, et al., 2018](https://doi.org/10.1038/s41586-018-0414-6))
 ]
 ]
+
+---
+
+# scVelo
+
+* Python package.
+* Estimates RNA velocity from estimates of gene-wise spliced and unspliced abundances.
+* Steady-state, stochastic, dynamic models.
+* Uses the `AnnData` format for internal data representation.
+* Not straightforward to integrate in an R/Bioconductor-based workflow.
 
 ---
 
@@ -103,22 +114,122 @@ setMethod("scvelo", "SummarizedExperiment", function(x, ...,
 
 ---
 
+# Input and data representation
+
+* The input to `scVelo` is two gene x cell count matrices, tabulating the UMI count for spliced and unspliced variants of each gene.
+* Several tools exist to estimate these counts from the raw reads (see &lt;a name=cite-soneson2021&gt;&lt;/a&gt;[Soneson, et al. (2021)](#bib-soneson2021) for an overview).
+* Count matrices are stored as assays in a `SummarizedExperiment` object.
+* The *[zellkonverter](https://bioconductor.org/packages/3.13/zellkonverter)* package takes care of conversion between the `SummarizedExperiment` and `AnnData` formats. 
+
+
+
+
+
+```r
+hermann
+```
+
+```
+## class: SingleCellExperiment 
+## dim: 54448 1711 
+## metadata(0):
+## assays(3): spliced unspliced logcounts
+## rownames(54448): ENSMUSG00000102693.1 ENSMUSG00000064842.1 ...
+##   ENSMUSG00000064369.1 ENSMUSG00000064372.1
+## rowData names(0):
+## colnames(1711): TGACAACAGGACAGAA TTGGAACAGGCGTACA ... TCGCGTTCAAGAGTCG
+##   CACCTTGCAGATCGGA
+## colData names(2): celltype sizeFactor
+## reducedDimNames(2): PCA TSNE
+## mainExpName: NULL
+## altExpNames(0):
+```
+
+---
+
+# Running scvelo()
+
+Use gene selection, normalization and dimension reduction from `scVelo`, or customize each step in R for full compatibility with the rest of the workflow.
+
+
+```r
+(hermann_velo &lt;- velociraptor::scvelo(hermann, subset.row = top.hvgs, assay.X = "spliced", use.dimred = "PCA"))
+```
+
+```
+## class: SingleCellExperiment 
+## dim: 2000 1711 
+## metadata(4): neighbors velocity_params velocity_graph
+##   velocity_graph_neg
+## assays(6): X spliced ... Mu velocity
+## rownames(2000): ENSMUSG00000038015.6 ENSMUSG00000022501.6 ...
+##   ENSMUSG00000115935.1 ENSMUSG00000029725.10
+## rowData names(3): velocity_gamma velocity_r2 velocity_genes
+## colnames(1711): TGACAACAGGACAGAA TTGGAACAGGCGTACA ... TCGCGTTCAAGAGTCG
+##   CACCTTGCAGATCGGA
+## colData names(7): velocity_self_transition root_cells ...
+##   velocity_confidence velocity_confidence_transition
+## reducedDimNames(1): X_pca
+## mainExpName: NULL
+## altExpNames(0):
+```
+
+```r
+reducedDim(hermann_velo, "TSNE") &lt;- reducedDim(hermann, "TSNE")
+hermann_velo$celltype &lt;- hermann$celltype
+```
+
+---
+
+# Project velocities onto low-dimensional embedding
+
+
+
+```r
+embedded &lt;- embedVelocity(reducedDim(hermann, "TSNE"), hermann_velo)
+grid.df &lt;- gridVectors(reducedDim(hermann, "TSNE"), embedded)
+
+plotTSNE(hermann, colour_by="celltype") +
+    geom_segment(data = grid.df, mapping = aes(x = start.1, y = start.2, 
+        xend = end.1, yend = end.2), arrow = arrow(length = unit(0.05, "inches")))
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Gene-wise visualizations
+
+
+```r
+plotVelocity(hermann_velo, c("ENSMUSG00000032601.13"), use.dimred = "TSNE", 
+             color_by = "celltype")
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
 # References
 
 .small-p[
-&lt;a name=bib-orchestrating2015&gt;&lt;/a&gt;[Huber, W., V. J. Carey, et
+&lt;a name=bib-orchestrating2015&gt;&lt;/a&gt;[Huber, W. et
 al.](#cite-orchestrating2015) (2015). "Orchestrating high-throughput
 genomic analysis with Bioconductor". In: _Nat Methods_ 12.2, pp.
 115-21. ISSN: 1548-7105 (Electronic) 1548-7091 (Linking). DOI:
 [10.1038/nmeth.3252](https://doi.org/10.1038%2Fnmeth.3252). URL:
 [https://www.ncbi.nlm.nih.gov/pubmed/25633503](https://www.ncbi.nlm.nih.gov/pubmed/25633503).
 
-&lt;a name=bib-lammano2018&gt;&lt;/a&gt;[La Manno, G., R. Soldatov, et
-al.](#cite-lammano2018) (2018). "RNA velocity of single cells". In:
-_Nature_ 560.7719, pp. 494-498. DOI:
+&lt;a name=bib-lamanno2018&gt;&lt;/a&gt;[La Manno, G. et al.](#cite-lamanno2018)
+(2018). "RNA velocity of single cells". In: _Nature_ 560.7719, pp.
+494-498. DOI:
 [10.1038/s41586-018-0414-6](https://doi.org/10.1038%2Fs41586-018-0414-6).
 URL:
 [https://doi.org/10.1038/s41586-018-0414-6](https://doi.org/10.1038/s41586-018-0414-6).
+
+&lt;a name=bib-soneson2021&gt;&lt;/a&gt;[Soneson, C. et al.](#cite-soneson2021)
+(2021). "Preprocessing choices affect RNA velocity results for droplet
+scRNA-seq data". In: _PLoS Comput. Biol._ 17.1, p. e1008585.
 ]
 
 .center[
