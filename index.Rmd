@@ -103,7 +103,7 @@ Balance between unspliced and spliced mRNAs is predictive of cellular state prog
 * Python package
   + [Read the Docs](https://scvelo.readthedocs.io/).
 * Estimates RNA velocity from estimates of gene-wise spliced and unspliced abundances.
-* Steady-state, stochastic, dynamic models.
+* Steady-state (deterministic), stochastic, dynamic models.
   + [Read the Docs](https://scvelo.readthedocs.io/about/#rna-velocity-models)
 * Uses the `AnnData` class for internal data representation
   + [Read the Docs](https://anndata.readthedocs.io/en/latest/)
