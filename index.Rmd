@@ -3,7 +3,7 @@ title: 'Bioconductor toolkit for single-cell RNA velocity <img src="img/velocira
 subtitle: 'Bioconductor Conference 2021'
 author: '[Kevin Rue-Albrecht](https://kevinrue.github.io), [Charlotte Soneson](https://csoneson.github.io), [Michael Stadler](https://github.com/mbstadler), [Aaron Lun](https://github.com/LTLA)'
 institute: ''
-date: 'YYYY-MM-DD (updated: `r Sys.Date()`)'
+date: '2021-08-06 (updated: `r Sys.Date()`)'
 output:
   xaringan::moon_reader:
     css: [default, metropolis, rladies-fonts, "my-theme.css"]
