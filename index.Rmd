@@ -102,11 +102,15 @@ Balance between unspliced and spliced mRNAs is predictive of cellular state prog
 
 * Python package
   + [Read the Docs](https://scvelo.readthedocs.io/).
+
 * Estimates RNA velocity from estimates of gene-wise spliced and unspliced abundances.
+
 * Steady-state (deterministic), stochastic, dynamic models.
   + [Read the Docs](https://scvelo.readthedocs.io/about/#rna-velocity-models)
-* Uses the `AnnData` class for internal data representation
+
+* Uses the <i class="fab fa-python"></i> `AnnData` class for internal data representation
   + [Read the Docs](https://anndata.readthedocs.io/en/latest/)
+
 * Not straightforward to integrate in an R/Bioconductor-based workflow.
 
 .right[
@@ -158,7 +162,8 @@ setMethod("scvelo", "SummarizedExperiment", function(x, ...,
 * The input to <i class="fab fa-python"></i> [scVelo](https://pypi.org/project/scvelo/) is two gene-by-cell count matrices, tabulating the UMI count for spliced and unspliced variants of each gene.
 * Several tools exist to estimate these counts from the raw reads `r Citep(bib, "soneson2021")`.
 * Count matrices are stored as assays in a `SummarizedExperiment` object.
-* The `r BiocStyle::Biocpkg('zellkonverter')` package takes care of conversion between the `SummarizedExperiment` and `AnnData` formats. 
+* The <img src="img/bioconductor_sticker.png" height="30px" style="vertical-align:bottom"> `r BiocStyle::Biocpkg('zellkonverter')` package takes care of conversion between the `AnnData` and `SingleCellExperiment` formats.
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 hermann <- scRNAseq::HermannSpermatogenesisData()
 hermann <- hermann[, hermann$celltype %in% c("Early Round spermatids",
@@ -219,6 +224,24 @@ plotTSNE(hermann, colour_by="celltype") +
 plotVelocity(hermann_velo, c("ENSMUSG00000032601.13"), use.dimred = "TSNE", 
              color_by = "celltype")
 ```
+
+---
+
+# Processing a dataset for RNA velocity analysis
+
+* The Hermann spermatogenesis data set used in these slides is available from the <img src="img/bioconductor_sticker.png" height="30px" style="vertical-align:bottom"> `r BiocStyle::Biocpkg('scRNAseq')` package.
+
+* The script detailing the pre-processing is available [here](https://github.com/LTLA/scRNAseq/blob/master/inst/scripts/2.4.0/make-hermann-spermatogenesis-data.Rmd) <sup>1</sup>
+
+.center[
+<img src="img/scrnaseq-github.png" height="300px">
+]
+
+.footnote[
+.small-p[
+<sup>1</sup> Long URL: <https://github.com/LTLA/scRNAseq/blob/master/inst/scripts/2.4.0/make-hermann-spermatogenesis-data.Rmd>
+]
+]
 
 ---
 
