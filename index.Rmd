@@ -108,7 +108,7 @@ Balance between unspliced and spliced mRNAs is predictive of cellular state prog
 
 .right[
 .small-p[
-Balance between unspliced and spliced mRNAs is predictive of cellular state progression.
+Generalizing RNA velocity to transient cell states through dynamical modeling
 `r Citep(bib, "bergen2020")`
 ]
 ]
