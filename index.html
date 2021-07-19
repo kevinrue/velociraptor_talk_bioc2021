@@ -19,7 +19,7 @@ class: center, middle, inverse, title-slide
 # Bioconductor toolkit for single-cell RNA velocity <img src="img/velociraptor_sticker.png" height="200px" style="vertical-align:bottom;float:right">
 ## Bioconductor Conference 2021
 ### <a href="https://kevinrue.github.io">Kevin Rue-Albrecht</a>, <a href="https://csoneson.github.io">Charlotte Soneson</a>, <a href="https://github.com/mbstadler">Michael Stadler</a>, <a href="https://github.com/LTLA">Aaron Lun</a>
-### YYYY-MM-DD (updated: 2021-07-19)
+### 2021-08-06 (updated: 2021-07-19)
 
 ---
 
@@ -72,11 +72,25 @@ Balance between unspliced and spliced mRNAs is predictive of cellular state prog
 
 # scVelo
 
-* Python package [Read the Docs](https://scvelo.readthedocs.io/).
+* Python package
+  + [Read the Docs](https://scvelo.readthedocs.io/).
+
 * Estimates RNA velocity from estimates of gene-wise spliced and unspliced abundances.
-* Steady-state, stochastic, dynamic models.
-* Uses the `AnnData` format for internal data representation.
+
+* Steady-state (deterministic), stochastic, dynamic models.
+  + [Read the Docs](https://scvelo.readthedocs.io/about/#rna-velocity-models)
+
+* Uses the &lt;i class="fab fa-python"&gt;&lt;/i&gt; `AnnData` class for internal data representation
+  + [Read the Docs](https://anndata.readthedocs.io/en/latest/)
+
 * Not straightforward to integrate in an R/Bioconductor-based workflow.
+
+.right[
+.small-p[
+Generalizing RNA velocity to transient cell states through dynamical modeling
+&lt;a name=cite-bergen2020&gt;&lt;/a&gt;([Bergen, et al., 2020](https://www.ncbi.nlm.nih.gov/pubmed/32747759))
+]
+]
 
 ---
 
@@ -116,14 +130,14 @@ setMethod("scvelo", "SummarizedExperiment", function(x, ...,
 
 # Input and data representation
 
-* The input to `scVelo` is two gene x cell count matrices, tabulating the UMI count for spliced and unspliced variants of each gene.
-* Several tools exist to estimate these counts from the raw reads (see &lt;a name=cite-soneson2021&gt;&lt;/a&gt;[Soneson, et al. (2021)](#bib-soneson2021) for an overview).
+* The input to &lt;i class="fab fa-python"&gt;&lt;/i&gt; [scVelo](https://pypi.org/project/scvelo/) is two gene-by-cell count matrices, tabulating the UMI count for spliced and unspliced variants of each gene.
+* Several tools exist to estimate these counts from the raw reads &lt;a name=cite-soneson2021&gt;&lt;/a&gt;([Soneson, et al., 2021](https://www.ncbi.nlm.nih.gov/pubmed/33428615)).
 * Count matrices are stored as assays in a `SummarizedExperiment` object.
-* The *[zellkonverter](https://bioconductor.org/packages/3.13/zellkonverter)* package takes care of conversion between the `SummarizedExperiment` and `AnnData` formats. 
+* The &lt;img src="img/bioconductor_sticker.png" height="30px" style="vertical-align:bottom"&gt; *[zellkonverter](https://bioconductor.org/packages/3.13/zellkonverter)* package takes care of conversion between the `AnnData` and `SingleCellExperiment` formats.
 
 
 
-
+.small-code[
 
 ```r
 hermann
@@ -144,16 +158,19 @@ hermann
 ## mainExpName: NULL
 ## altExpNames(0):
 ```
+]
 
 ---
 
-# Running scvelo()
+# Running velociraptor::scvelo()
 
-Use gene selection, normalization and dimension reduction from `scVelo`, or customize each step in R for full compatibility with the rest of the workflow.
+Use gene selection, normalization and dimension reduction from &lt;i class="fab fa-python"&gt;&lt;/i&gt; [scVelo](https://pypi.org/project/scvelo/), or customize each step in &lt;i class="fab fa-r-project"&gt;&lt;/i&gt; for full compatibility with the rest of the workflow.
 
+.small-code[
 
 ```r
-(hermann_velo &lt;- velociraptor::scvelo(hermann, subset.row = top.hvgs, assay.X = "spliced", use.dimred = "PCA"))
+hermann_velo &lt;- velociraptor::scvelo(hermann, subset.row = top.hvgs, assay.X = "spliced", use.dimred = "PCA")
+hermann_velo
 ```
 
 ```
@@ -178,6 +195,7 @@ Use gene selection, normalization and dimension reduction from `scVelo`, or cust
 reducedDim(hermann_velo, "TSNE") &lt;- reducedDim(hermann, "TSNE")
 hermann_velo$celltype &lt;- hermann$celltype
 ```
+]
 
 ---
 
@@ -210,9 +228,35 @@ plotVelocity(hermann_velo, c("ENSMUSG00000032601.13"), use.dimred = "TSNE",
 
 ---
 
+# Processing a dataset for RNA velocity analysis
+
+* The Hermann spermatogenesis data set used in these slides is available from the &lt;img src="img/bioconductor_sticker.png" height="30px" style="vertical-align:bottom"&gt; *[scRNAseq](https://bioconductor.org/packages/3.13/scRNAseq)* package.
+
+* The script detailing the pre-processing is available [here](https://github.com/LTLA/scRNAseq/blob/master/inst/scripts/2.4.0/make-hermann-spermatogenesis-data.Rmd) &lt;sup&gt;1&lt;/sup&gt;
+
+.center[
+&lt;img src="img/scrnaseq-github.png" height="300px"&gt;
+]
+
+.footnote[
+.small-p[
+&lt;sup&gt;1&lt;/sup&gt; Long URL: &lt;https://github.com/LTLA/scRNAseq/blob/master/inst/scripts/2.4.0/make-hermann-spermatogenesis-data.Rmd&gt;
+]
+]
+
+---
+
 # References
 
 .small-p[
+&lt;a name=bib-bergen2020&gt;&lt;/a&gt;[Bergen, V. et al.](#cite-bergen2020)
+(2020). "Generalizing RNA velocity to transient cell states through
+dynamical modeling". In: _Nat Biotechnol_ 38.12, pp. 1408-1414. ISSN:
+1546-1696 (Electronic) 1087-0156 (Linking). DOI:
+[10.1038/s41587-020-0591-3](https://doi.org/10.1038%2Fs41587-020-0591-3).
+URL:
+[https://www.ncbi.nlm.nih.gov/pubmed/32747759](https://www.ncbi.nlm.nih.gov/pubmed/32747759).
+
 &lt;a name=bib-orchestrating2015&gt;&lt;/a&gt;[Huber, W. et
 al.](#cite-orchestrating2015) (2015). "Orchestrating high-throughput
 genomic analysis with Bioconductor". In: _Nat Methods_ 12.2, pp.
@@ -229,7 +273,11 @@ URL:
 
 &lt;a name=bib-soneson2021&gt;&lt;/a&gt;[Soneson, C. et al.](#cite-soneson2021)
 (2021). "Preprocessing choices affect RNA velocity results for droplet
-scRNA-seq data". In: _PLoS Comput. Biol._ 17.1, p. e1008585.
+scRNA-seq data". In: _PLoS Comput Biol_ 17.1, p. e1008585. ISSN:
+1553-7358 (Electronic) 1553-734X (Linking). DOI:
+[10.1371/journal.pcbi.1008585](https://doi.org/10.1371%2Fjournal.pcbi.1008585).
+URL:
+[https://www.ncbi.nlm.nih.gov/pubmed/33428615](https://www.ncbi.nlm.nih.gov/pubmed/33428615).
 ]
 
 .center[
