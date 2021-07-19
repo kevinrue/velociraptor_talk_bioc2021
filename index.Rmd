@@ -191,7 +191,7 @@ hermann
 
 # Running velociraptor::scvelo()
 
-Use gene selection, normalization and dimension reduction from <i class="fab fa-python"></i> [scVelo](https://pypi.org/project/scvelo/), or customize each step in R for full compatibility with the rest of the workflow.
+Use gene selection, normalization and dimension reduction from <i class="fab fa-python"></i> [scVelo](https://pypi.org/project/scvelo/), or customize each step in <i class="fab fa-r-project"></i> for full compatibility with the rest of the workflow.
 
 .small-code[
 ```{r, message=FALSE, warning=FALSE}
