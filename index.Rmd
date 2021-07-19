@@ -167,8 +167,8 @@ setMethod("scvelo", "SummarizedExperiment", function(x, ...,
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 hermann <- scRNAseq::HermannSpermatogenesisData()
 hermann <- hermann[, hermann$celltype %in% c("Early Round spermatids",
-                                             "Late Round spermatids",
-                                             "Mid Round spermatids")]
+                                             "Mid Round spermatids",
+                                             "Late Round spermatids")]
 hermann$celltype <- factor(hermann$celltype, 
                            levels = c("Early Round spermatids",
                                       "Mid Round spermatids",
