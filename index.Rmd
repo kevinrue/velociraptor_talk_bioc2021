@@ -155,11 +155,10 @@ setMethod("scvelo", "SummarizedExperiment", function(x, ...,
 
 # Input and data representation
 
-* The input to `scVelo` is two gene x cell count matrices, tabulating the UMI count for spliced and unspliced variants of each gene.
-* Several tools exist to estimate these counts from the raw reads (see `r Citet(bib, "soneson2021")` for an overview).
+* The input to <i class="fab fa-python"></i> [scVelo](https://pypi.org/project/scvelo/) is two gene-by-cell count matrices, tabulating the UMI count for spliced and unspliced variants of each gene.
+* Several tools exist to estimate these counts from the raw reads `r Citep(bib, "soneson2021")`.
 * Count matrices are stored as assays in a `SummarizedExperiment` object.
 * The `r BiocStyle::Biocpkg('zellkonverter')` package takes care of conversion between the `SummarizedExperiment` and `AnnData` formats. 
-
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 hermann <- scRNAseq::HermannSpermatogenesisData()
 hermann <- hermann[, hermann$celltype %in% c("Early Round spermatids",
@@ -177,22 +176,26 @@ hermann <- scater::runPCA(hermann, subset_row = top.hvgs)
 hermann <- scater::runTSNE(hermann, dimred = "PCA")
 ```
 
-
+.small-code[
 ```{r, message=FALSE}
 hermann
 ```
+]
 
 ---
 
-# Running scvelo()
+# Running velociraptor::scvelo()
 
-Use gene selection, normalization and dimension reduction from `scVelo`, or customize each step in R for full compatibility with the rest of the workflow.
+Use gene selection, normalization and dimension reduction from <i class="fab fa-python"></i> [scVelo](https://pypi.org/project/scvelo/), or customize each step in R for full compatibility with the rest of the workflow.
 
+.small-code[
 ```{r, message=FALSE, warning=FALSE}
-(hermann_velo <- velociraptor::scvelo(hermann, subset.row = top.hvgs, assay.X = "spliced", use.dimred = "PCA"))
+hermann_velo <- velociraptor::scvelo(hermann, subset.row = top.hvgs, assay.X = "spliced", use.dimred = "PCA")
+hermann_velo
 reducedDim(hermann_velo, "TSNE") <- reducedDim(hermann, "TSNE")
 hermann_velo$celltype <- hermann$celltype
 ```
+]
 
 ---
 

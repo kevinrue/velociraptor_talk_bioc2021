@@ -60,6 +60,10 @@ h2 {
     color: #1a81c2;
 }
 
+.small-code .remark-code{
+    font-size: small;
+}
+
 a, a > code {
     color: #18bc9c;
     text-decoration: none;
