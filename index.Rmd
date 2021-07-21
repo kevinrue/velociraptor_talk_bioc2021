@@ -32,6 +32,10 @@ stopifnot(require(RefManageR))
 stopifnot(require(knitr))
 ```
 
+```{r dependencies, include=FALSE}
+stopifnot(require(metR))
+```
+
 ```{r htmltools, include=FALSE}
 stopifnot(requireNamespace("htmltools"))
 htmltools::tagList(rmarkdown::html_dependency_font_awesome())
