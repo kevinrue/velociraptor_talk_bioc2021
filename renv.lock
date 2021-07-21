@@ -576,9 +576,9 @@
     },
     "ensembldb": {
       "Package": "ensembldb",
-      "Version": "2.17.2",
+      "Version": "2.17.3",
       "Source": "Bioconductor",
-      "Hash": "9c7eb1c75706cc0a11170b74cbf4f3b0"
+      "Hash": "fa1d8a4dc816135927b833296396dab7"
     },
     "evaluate": {
       "Package": "evaluate",
