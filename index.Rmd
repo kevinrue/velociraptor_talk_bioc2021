@@ -227,20 +227,30 @@ plotVelocity(hermann_velo, c("ENSMUSG00000032601.13"), use.dimred = "TSNE",
 
 ---
 
+# Stream lines
+
+```{r, fig.width=8, fig.height=5, fig.align="center"}
+plotVelocityStream(hermann_velo, embedded, use.dimred = "TSNE", 
+  color.streamlines = TRUE, color_by = "velocity_pseudotime")
+```
+
+
+---
+
 # Processing a dataset for RNA velocity analysis
 
 * The Hermann spermatogenesis data set used in these slides is available from the <img src="img/bioconductor_sticker.png" height="30px" style="vertical-align:bottom"> `r BiocStyle::Biocpkg('scRNAseq')` package.
-
 * The script detailing the pre-processing is available [here](https://github.com/LTLA/scRNAseq/blob/master/inst/scripts/2.4.0/make-hermann-spermatogenesis-data.Rmd) <sup>1</sup>
+* The source code for this presentation is available [here](https://github.com/kevinrue/velociraptor_talk_bioc2021) <sup>2</sup>
 
 .center[
 <img src="img/scrnaseq-github.png" height="300px">
 ]
 
-.footnote[
 .small-p[
 <sup>1</sup> Long URL: <https://github.com/LTLA/scRNAseq/blob/master/inst/scripts/2.4.0/make-hermann-spermatogenesis-data.Rmd>
-]
+
+<sup>2</sup> Long URL: <https://github.com/kevinrue/velociraptor_talk_bioc2021>
 ]
 
 ---
